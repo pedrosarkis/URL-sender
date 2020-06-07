@@ -2,13 +2,13 @@ const getData = () => {
     const emailFrom = document.getElementById('from').value;
     const emailTo = document.getElementById('to').value;
     const pass = document.getElementById('pass').value;
-
-    return {
+    const data = {
         emailFrom,
         emailTo,
         pass,
     };
-}
+    return data;
+};
 
 const sendContent = (callback) => {
     const data = getData();
@@ -19,8 +19,33 @@ const sendContent = (callback) => {
     });
 };
 
+const setLocalStorage = (data) => {
+    debugger;
+    chrome.storage.local.set({personData: JSON.stringify(data)}, function() {
+        console.log('Value is set to ' + data);
+      });
+    return true;
+};
+
+const getLocalStorage = () => {
+    const emailFrom = document.getElementById('from');
+    const emailTo = document.getElementById('to');
+    const pass = document.getElementById('pass');
+    
+    chrome.storage.local.get(['personData'], function(result) {
+        
+        let object = JSON.parse(result.personData);
+       
+        emailFrom.value = object.emailFrom;
+        emailTo.value = object.emailTo;
+        pass.value = object.pass;
+    });
+}
+getLocalStorage();
+    
 
 const executeFetch = async (data) => {
+    setLocalStorage(data);
     console.log(data)
     const fetchSettings = {
         method: 'POST',
@@ -42,7 +67,5 @@ const executeFetch = async (data) => {
         
     }
 }
-const doEverything = () => {
-    sendContent(executeFetch);
-};
-document.getElementById('sendContent').addEventListener('click', doEverything );
+
+document.getElementById('sendContent').addEventListener('click', () => {sendContent(executeFetch)});
