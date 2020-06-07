@@ -1,0 +1,16 @@
+{
+    "manifest_version": 2,
+  
+    "name": "PDFconverter and sender",
+    "description": "This Extension will send the actual url to another application, that will convert the content in pdf and sent to email",
+    "version": "1.0",
+  
+    "browser_action": {
+     "default_icon": "icon.png",
+     "default_popup": "popup.html"
+    },
+    "permissions": [
+     "activeTab",
+     "tabs"
+     ]
+  }
