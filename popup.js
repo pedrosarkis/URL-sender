@@ -56,7 +56,7 @@ const executeFetch = async (data) => {
         }
     };
 
-    const response = await fetch('http://localhost:3000/sendPageContent', fetchSettings);
+    const response = await fetch('http://localhost:3000/send/pageContent', fetchSettings);
     if(!response.ok) throw Error(response.message);
     try {
         const responseData = await response.json();
